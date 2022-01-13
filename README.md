@@ -37,7 +37,7 @@ Let's describe what this project does step-by step, when you call `dockerpi-run-
 In the end you will get two `.tar.gz` files which can be used to cross-compile your software for arm-linux. You can export them and then use in CI.
 
 ### Usage
-- `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain`
+- `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain; chmod a+x ./*.sh`
 - `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
 - `sudo ./dockerpi-run-all.sh` - build everything
 - `sudo ./dockerpi-clean.sh` - clean up everything
