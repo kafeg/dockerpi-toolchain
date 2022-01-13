@@ -15,6 +15,14 @@ then
   wget $ZIP_URL
 fi
 
+echo $ZIP_SHA256 $ZIP_NAME | sha256sum.exe -c
+
+if [ $? -ne 0 ]
+then
+  echo "$ZIP_NAME has invalid hash. Please remove it and download again"
+  exit 1
+fi
+
 if [ ! -f "$IMG_NAME" ]
 then
   echo "Unzipping filesystem image"

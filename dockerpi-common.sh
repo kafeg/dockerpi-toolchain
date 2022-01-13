@@ -1,6 +1,7 @@
 #/bin/bash
 
 ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
+ZIP_SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
 ZIP_NAME="2020-02-13-raspbian-buster-lite.zip"
 IMG_NAME="2020-02-13-raspbian-buster-lite.img"
 IMG_NAME_MOD="filesystem.img"

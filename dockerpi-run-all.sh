@@ -22,6 +22,6 @@ docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm
 ./dockerpi-artifacts.sh
 [ $? -eq 0 ] || exit 1
 
-./dockerpi-clean.sh
-[ $? -eq 0 ] || exit 1
+#./dockerpi-clean.sh
+#[ $? -eq 0 ] || exit 1
 
