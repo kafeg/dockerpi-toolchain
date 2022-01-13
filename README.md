@@ -11,7 +11,7 @@ Please check those links above to get info what each project does and about exis
 The main goal of this project is to avoid manual command executing and automate everything what can be automated.
 
 ### Usage
-- clone repo
+- `git clone https://github.com/kafeg/dockerpi-toolchain.git`
 - adjust packages list, pathes and other params in `dockerpi-common.sh`
 - to build all - call `sudo ./dockerpi-run-all.sh`
 - to force clean up all - call `sudo ./dockerpi-clean.sh`
