@@ -10,12 +10,6 @@ Please check those links above to get info what each project does and about exis
 
 The main goal of this project is to avoid manual command executing and automate everything what can be automated.
 
-### Usage
-- `git clone https://github.com/kafeg/dockerpi-toolchain.git`
-- adjust packages list, pathes and other params in `dockerpi-common.sh`
-- to build all - call `sudo ./dockerpi-run-all.sh`
-- to force clean up all - call `sudo ./dockerpi-clean.sh`
-
 ### How it works
 So, `dockerpi-run-all.sh` is the main script in this repo which calls all other.
 
@@ -41,6 +35,12 @@ Let's describe what this project does step-by step, when you call `dockerpi-run-
 - - remove extracted rootfs/toolchain (default `/opt/pi-rootfs` and `/opt/pi-toolchain`)
 
 In the end you will get two `.tar.gz` files which can be used to cross-compile your software for arm-linux. You can export them and then use in CI.
+
+### Usage
+- `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain`
+- `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
+- `sudo ./dockerpi-run-all.sh` - build everything
+- `sudo ./dockerpi-clean.sh` - clean up everything
 
 ### Configuration
 
