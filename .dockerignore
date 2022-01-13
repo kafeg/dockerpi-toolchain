@@ -1,0 +1,5 @@
+*.zip
+*.img
+dockerpi-*.sh
+artifacts
+
