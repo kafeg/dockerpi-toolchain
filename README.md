@@ -13,7 +13,8 @@ The main goal of this project is to avoid manual command executing and automate 
 ### Usage
 - clone repo
 - adjust packages list, pathes and other params in `dockerpi-common.sh`
-- call `sudo ./dockerpi-run-all.sh`
+- to build all - call `sudo ./dockerpi-run-all.sh`
+- to force clean up all - call `sudo ./dockerpi-clean.sh`
 
 ### How it works
 So, `dockerpi-run-all.sh` is the main script in this repo which calls all other.
