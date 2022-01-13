@@ -72,7 +72,7 @@ cat <<EOT >> $MOUNT_PATH/firstboot.sh
 #set -x
 sleep 15
 sudo apt-get update #--allow-releaseinfo-change
-sudo apt-get install -y build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar zip sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles1-mesa libegl1-mesa-dev libgles2-mesa libgles2-mesa-dev gdb gdbserver cloud-guest-utils e2fsprogs
+sudo apt-get install -y $PACKAGES_LIST
 sudo apt-get autoremove -y
 sleep 30
 sudo halt

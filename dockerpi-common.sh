@@ -15,6 +15,8 @@ ARTIFACTS_DIR=artifacts
 ARTIFACT_ROOT_FS=pi-rootfs.tar.gz
 ARTIFACT_TOOLCHAIN=pi-toolchain.tar.gz
 
+PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver"
+
 function mountimg {
   if [ -d "$MOUNT_PATH/bin" ]; then umount $MOUNT_PATH; fi
   if [ -f "$LOOP_NAME" ]; then losetup -d $LOOP_NAME; fi
