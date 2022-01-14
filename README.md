@@ -47,6 +47,51 @@ In the end you will get two `.tar.gz` files which can be used to cross-compile y
 Please check dockerpi-common.sh to adjust default configuration before call `sudo ./dockerpi-run-all.sh`.
 By default PACKAGES_LIST contains everything required to cross-compile `vcpkg -> qt5-base` port
 
+### How to use in CI
+
+This is a sample workflow for GitHub Actions, which build toolchain and then upload artifacts to S3. You can adapt it to your CI system.
+
+```
+name: build-arm-linux-toolchain-rootfs
+
+# manual run only
+on: workflow_dispatch
+
+# NOTE: 
+#  This workflow requires 'ghusr ALL=(ALL) NOPASSWD: ALL' in the /etc/sudoers file, then you can remove it again and just use complete artifacts
+#  This workflow requires `aws-cli` and `docker`, please install it by your system package manager
+
+jobs:
+  job:
+    name: arm-linux-toolchain-rootfs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout kafeg/dockerpi-toolchain
+        uses: actions/checkout@v2
+        with:
+          repository: kafeg/dockerpi-toolchain
+          path: dockerpi-toolchain
+
+      - name: Build rootfs and toolchain
+        run: |
+          cd dockerpi-toolchain
+          chmod a+x ./*.sh
+          sudo ./dockerpi-run-all.sh
+          sudo ./dockerpi-clean.sh
+
+      - name: Upload to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_BUCKET: sample_bucket
+          AWS_DIR: arm-linux-toolchain
+        run: |
+          cd dockerpi-toolchain
+          aws s3 cp artifacts/pi-rootfs.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-rootfs.tar.gz
+          aws s3 cp artifacts/pi-toolchain.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-toolchain.tar.gz
+```
+
 ### How to cross-compile vcpkg ports
 
 TODO ...
