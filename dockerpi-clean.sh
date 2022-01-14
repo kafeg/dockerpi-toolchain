@@ -16,9 +16,8 @@ rm -rf $MOUNT_PATH
 rm -f *.zip
 rm -f *.img
 
-docker rmi dockerpi/toolchain
-docker rmi lukechilds/dockerpi:vm
-docker rmi lukechilds/dockerpi
+docker rmi dockerpi/toolchain -f
+docker rmi lukechilds/dockerpi:vm -f
 docker system prune -f
 
 
