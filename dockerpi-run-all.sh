@@ -10,7 +10,9 @@ fi
 ./dockerpi-modify.sh
 [ $? -eq 0 ] || exit 1
 
+mv $IMG_NAME_MOD filesystem.img
 docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION}
+mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
 
 ./dockerpi-extract.sh
