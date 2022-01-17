@@ -11,8 +11,8 @@ fi
 
 if [ ! -f "$ZIP_NAME" ]
 then
-  echo "Downloading filesystem image"
-  wget --quiet $ZIP_URL
+  echo "Downloading filesystem image to /opt/$ZIP_NAME"
+  wget --quiet -O /opt/$ZIP_NAME $ZIP_URL
 fi
 
 echo $ZIP_SHA256 $ZIP_NAME | sha256sum -c
@@ -26,7 +26,9 @@ fi
 if [ ! -f "$IMG_NAME" ]
 then
   echo "Unzipping filesystem image"
+  cp /opt/$ZIP_NAME ./
   unzip $ZIP_NAME
+  rm $ZIP_NAME
 fi
 
 chmod 777 $IMG_NAME $ZIP_NAME
