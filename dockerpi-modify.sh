@@ -15,7 +15,7 @@ then
   wget --quiet -O /opt/$ZIP_NAME $ZIP_URL
 fi
 
-echo $ZIP_SHA256 $ZIP_NAME | sha256sum -c
+echo $ZIP_SHA256 /opt/$ZIP_NAME | sha256sum -c
 
 if [ $? -ne 0 ]
 then
