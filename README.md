@@ -90,6 +90,10 @@ jobs:
           cd dockerpi-toolchain
           aws s3 cp artifacts/pi-rootfs.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-rootfs.tar.gz
           aws s3 cp artifacts/pi-toolchain.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-toolchain.tar.gz
+          cd artifacts/
+          sha256sum pi-rootfs.tar.gz > checksum.txt
+          sha256sum pi-toolchain.tar.gz >> checksum.txt
+          aws s3 cp checksum.txt s3://$AWS_BUCKET/$AWS_DIR/checksum.txt
 ```
 
 ### How to cross-compile vcpkg ports
