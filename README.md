@@ -98,7 +98,15 @@ jobs:
 
 ### How to cross-compile vcpkg ports
 
-TODO ...
+To use vcpkg with built toolchain and cross-compile something you need to save `chainload` file and change vcpkg triplet `arm-linux`. Chainload file already prepared and placed inside `pi-toolchain.tar.gz`.
+
+#### Sample to install package
+1. Download `pi-rootfs.tar.gz` and `pi-toolchain.tar.gz`
+2. git clone https://github.com/microsoft/vcpkg
+3. ./vcpkg/bootstrap-vcpkg.sh
+4. echo "set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)" >> ./vcpkg/triplets/community/arm-linux.cmake
+5. export ARM_LINUX_CHAINLOAD=/
+6. ./vcpkg/vcpkg install qt5-base:arm-linux
 
 ### How to cross-compile your software
 
