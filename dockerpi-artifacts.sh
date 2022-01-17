@@ -28,6 +28,13 @@ fi
 if [ ! -f "$ARTIFACTS_DIR/$ARTIFACT_TOOLCHAIN" ]
 then
   echo "Creating $ARTIFACTS_DIR/$ARTIFACT_TOOLCHAIN"
+  
+  cp arm-linux-toolchain.cmake $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  
+  sed -i 's/RASPBERRY_VERSION_TPL/$RASPBERRY_VERSION/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  sed -i 's/SYSROOT_PATH_TPL/$ROOTFS_PATH/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  sed -i 's/TOOLCHAIN_DIR_TPL/$TOOLCHAIN_PATH/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  
   cd $TOOLCHAIN_PATH/..
   tar -zcf $ARTIFACTS_PATH/$ARTIFACT_TOOLCHAIN `basename $TOOLCHAIN_PATH`
   cd $DMPWD
