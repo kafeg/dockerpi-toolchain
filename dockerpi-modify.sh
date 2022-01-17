@@ -79,7 +79,7 @@ cat <<EOT >> $MOUNT_PATH/firstboot.sh
 #!/bin/bash
 #set -x
 sleep 15
-sudo apt-get update #--allow-releaseinfo-change
+sudo apt-get update --allow-releaseinfo-change
 sudo apt-get install -y $PACKAGES_LIST
 sudo apt-get autoremove -y
 sleep 30
