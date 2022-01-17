@@ -11,7 +11,9 @@ fi
 [ $? -eq 0 ] || exit 1
 
 mv $IMG_NAME_MOD filesystem.img
-docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION}
+docker run --name rootfssetup-${TARGET_ARCH} -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
+sleep 30m # https://github.com/lukechilds/dockerpi/pull/4
+docker stop rootfssetup-${TARGET_ARCH}
 mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
 
