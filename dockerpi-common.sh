@@ -9,9 +9,11 @@ fi
 
 RASPBERRY_VERSION_NUMBER=`echo $RASPBERRY_VERSION | sed 's/pi//g'`
 
-if [ "${RASPBERRY_VERSION}" = "pi1" ]; then
+if [ "${RASPBERRY_VERSION}" = "pi1" ]
+then
     TARGET_ARCH="armv6" # pi1
-else if [ "${RASPBERRY_VERSION}" = "pi2" ]; then
+else if [ "${RASPBERRY_VERSION}" = "pi2" ]
+then
     TARGET_ARCH="armv7" # pi2
 else
     TARGET_ARCH="aarch64" # pi3
