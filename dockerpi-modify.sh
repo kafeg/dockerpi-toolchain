@@ -12,7 +12,7 @@ fi
 if [ ! -f "$ZIP_NAME" ]
 then
   echo "Downloading filesystem image"
-  wget $ZIP_URL
+  wget --quiet $ZIP_URL
 fi
 
 echo $ZIP_SHA256 $ZIP_NAME | sha256sum -c

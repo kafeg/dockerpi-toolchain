@@ -2,6 +2,9 @@
 
 source ./dockerpi-common.sh
 
+echo "RASPBERRY_VERSION=${RASPBERRY_VERSION}"
+echo "TARGET_ARCH=${TARGET_ARCH}"
+
 if [ "$EUID" -ne 0 ]
   then echo "Please run with sudo"
   exit

@@ -43,22 +43,22 @@ RUN useradd -ms /bin/bash develop && \
 WORKDIR /home/develop
 
 # Download and extract GCC
-RUN wget https://ftp.gnu.org/gnu/gcc/${GCC_VERSION}/${GCC_VERSION}.tar.gz && \
+RUN wget --quiet https://ftp.gnu.org/gnu/gcc/${GCC_VERSION}/${GCC_VERSION}.tar.gz && \
     tar xf ${GCC_VERSION}.tar.gz && \
     rm ${GCC_VERSION}.tar.gz
 
 # Download and extract LibC
-RUN wget https://ftp.gnu.org/gnu/libc/${GLIBC_VERSION}.tar.bz2 && \
+RUN wget --quiet https://ftp.gnu.org/gnu/libc/${GLIBC_VERSION}.tar.bz2 && \
     tar xjf ${GLIBC_VERSION}.tar.bz2 && \
     rm ${GLIBC_VERSION}.tar.bz2
 
 # Download and extract BinUtils
-RUN wget https://ftp.gnu.org/gnu/binutils/${BINUTILS_VERSION}.tar.bz2 && \
+RUN wget --quiet https://ftp.gnu.org/gnu/binutils/${BINUTILS_VERSION}.tar.bz2 && \
     tar xjf ${BINUTILS_VERSION}.tar.bz2 && \
     rm ${BINUTILS_VERSION}.tar.bz2
 
 # Download and extract GDB
-RUN wget https://ftp.gnu.org/gnu/gdb/${GDB_VERSION}.tar.gz && \
+RUN wget --quiet https://ftp.gnu.org/gnu/gdb/${GDB_VERSION}.tar.gz && \
     tar xvf ${GDB_VERSION}.tar.gz && \
     rm ${GDB_VERSION}.tar.gz
 
