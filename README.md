@@ -40,12 +40,17 @@ In the end you will get two `.tar.gz` files which can be used to cross-compile y
 - `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain; chmod a+x ./*.sh`
 - `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
 - `sudo ./dockerpi-run-all.sh` - build everything
-- `sudo ./dockerpi-clean.sh` - clean up everything
+- `sudo ./dockerpi-clean.sh` - clean up everything (optional)
 
 ### Configuration
 
-Please check dockerpi-common.sh to adjust default configuration before call `sudo ./dockerpi-run-all.sh`.
-By default PACKAGES_LIST contains everything required to cross-compile `vcpkg -> qt5-base` port
+Please check `dockerpi-common.sh` to adjust default configuration before call `sudo ./dockerpi-run-all.sh`.
+
+Here a list of values which you can change:
+- RASPBERRY_VERSION - accepts values `1`, `2`, `3` and affects to `dockerpi`. Only `1` option tested. Affects to result binaries `arm` or `armv7`.
+- PACKAGES_LIST - list of packages to be instalkkled in the custom `rootfs`. By default there a package dependencies to build vcpkg `qt5-base` port.
+- TOOLCHAIN_PATH, ROOTFS_PATH, MOUNT_PATH - output and work pathes. Better to keep unchanged.
+- ZIP_URL, ZIP_SHA256 - source filesystem image to change and customize.
 
 ### How to use in CI
 
@@ -58,7 +63,8 @@ name: build-arm-linux-toolchain-rootfs
 on: workflow_dispatch
 
 # NOTE: 
-#  This workflow requires 'ghusr ALL=(ALL) NOPASSWD: ALL' in the /etc/sudoers file, then you can remove it again and just use complete artifacts
+#  This workflow requires 'ghusr ALL=(ALL) NOPASSWD: ALL' in the /etc/sudoers file, 
+#  then you can remove it again and just use complete artifacts
 #  This workflow requires `aws-cli` and `docker`, please install it by your system package manager
 
 jobs:
@@ -78,7 +84,7 @@ jobs:
           cd dockerpi-toolchain
           chmod a+x ./*.sh
           sudo ./dockerpi-run-all.sh
-          sudo ./dockerpi-clean.sh
+          sudo ./dockerpi-clean.sh # optional!
 
       - name: Upload to S3
         env:
