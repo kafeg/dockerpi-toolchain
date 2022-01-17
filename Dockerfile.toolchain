@@ -11,7 +11,10 @@ ENV BINUTILS_VERSION binutils-2.31.1
 ENV GDB_VERSION gdb-8.2.1
 ARG DEBIAN_FRONTEND=noninteractive
 
-ARG TOOLCHAIN_PATH_ARG # you could give this a default value as well
+ARG TOOLCHAIN_ARCH_ARG
+ENV TOOLCHAIN_ARCH=$TOOLCHAIN_ARCH_ARG
+
+ARG TOOLCHAIN_PATH_ARG
 ENV TOOLCHAIN_PATH=$TOOLCHAIN_PATH_ARG
 
 # Install some tools and compilers + clean up
@@ -61,7 +64,7 @@ RUN mkdir -p ${TOOLCHAIN_PATH}
 WORKDIR /home/develop/build-binutils
 RUN ../${BINUTILS_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH} --target=arm-linux-gnueabihf \
-        --with-arch=armv6 --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
         --disable-multilib
 RUN make -j$(nproc) && \
     make install
@@ -72,7 +75,7 @@ RUN ../${GCC_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH} \
         --target=arm-linux-gnueabihf \
         --enable-languages=c,c++,fortran \
-        --with-arch=armv6 --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
         --disable-multilib
 RUN make -j$(nproc) all-gcc && \
     make install-gcc
@@ -97,7 +100,7 @@ WORKDIR /home/develop/build-glibc
 RUN ../${GLIBC_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH}/arm-linux-gnueabihf \
         --build=$MACHTYPE --host=arm-linux-gnueabihf --target=arm-linux-gnueabihf \
-        --with-arch=armv6 --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
         --with-headers=${TOOLCHAIN_PATH}/arm-linux-gnueabihf/include \
         --disable-multilib libc_cv_forced_unwind=yes
 RUN make install-bootstrap-headers=yes install-headers

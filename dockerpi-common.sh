@@ -1,12 +1,20 @@
 #/bin/bash
 
-RASPBERRY_VERSION=pi1
+if [ -z "$PI_VER" ]
+then
+    RASPBERRY_VERSION=pi1
+else
+    RASPBERRY_VERSION=$PI_VER
+fi
+
 RASPBERRY_VERSION_NUMBER=`echo $RASPBERRY_VERSION | sed 's/pi//g'`
 
-if [[ "${RASPBERRY_VERSION}" = "pi1" || "${RASPBERRY_VERSION}" = "pi2" ]]; then
-	TARGET_ARCH="arm"
+if [ "${RASPBERRY_VERSION}" = "pi1" ]; then
+    TARGET_ARCH="armv6" # pi1
+else if [ "${RASPBERRY_VERSION}" = "pi2" ]; then
+    TARGET_ARCH="armv7" # pi2
 else
-    TARGET_ARCH="arm64"
+    TARGET_ARCH="aarch64" # pi3
 fi
 
 ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
