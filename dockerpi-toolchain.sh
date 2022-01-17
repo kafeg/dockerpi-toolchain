@@ -29,8 +29,8 @@ then
     exit 1
 fi
 
-docker build -f Dockerfile.toolchain --build-arg TOOLCHAIN_PATH_ARG=${TOOLCHAIN_PATH} --network=host -t dockerpi/toolchain .
-docker run -v /opt:/opt/mount --rm dockerpi/toolchain bash -c "cp -r ${TOOLCHAIN_PATH} /opt/mount/"
+docker build -f Dockerfile.toolchain --build-arg TOOLCHAIN_PATH_ARG=${TOOLCHAIN_PATH} --network=host -t dockerpi/toolchain-${TARGET_ARCH} .
+docker run -v /opt:/opt/mount --rm dockerpi/toolchain-${TARGET_ARCH} bash -c "cp -r ${TOOLCHAIN_PATH} /opt/mount/"
 ${TOOLCHAIN_PATH}/bin/arm-linux-gnueabihf-cpp --version
 
 

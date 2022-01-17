@@ -10,7 +10,7 @@ fi
 ./dockerpi-modify.sh
 [ $? -eq 0 ] || exit 1
 
-docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm pi${RASPBERRY_VERSION}
+docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION}
 [ $? -eq 0 ] || exit 1
 
 ./dockerpi-extract.sh

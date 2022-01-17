@@ -1,22 +1,29 @@
 #/bin/bash
 
-RASPBERRY_VERSION=1
+RASPBERRY_VERSION=pi1
+RASPBERRY_VERSION_NUMBER=`echo $RASPBERRY_VERSION | sed 's/pi//g'`
+
+if [[ "${RASPBERRY_VERSION}" = "pi1" || "${RASPBERRY_VERSION}" = "pi2" ]]; then
+	TARGET_ARCH="arm"
+else
+    TARGET_ARCH="arm64"
+fi
 
 ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
 ZIP_SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
 ZIP_NAME="2020-02-13-raspbian-buster-lite.zip"
 IMG_NAME="2020-02-13-raspbian-buster-lite.img"
-IMG_NAME_MOD="filesystem.img"
+IMG_NAME_MOD="filesystem-${TARGET_ARCH}.img"
 
-TOOLCHAIN_PATH=/opt/pi-toolchain
-ROOTFS_PATH=/opt/pi-rootfs
-MOUNT_PATH=/opt/pi-mount
+TOOLCHAIN_PATH=/opt/pi-toolchain-${TARGET_ARCH}
+ROOTFS_PATH=/opt/pi-rootfs-${TARGET_ARCH}
+MOUNT_PATH=/opt/pi-mount-${TARGET_ARCH}
 LOOP_NAME="/dev/loop0" # get empty loop device
 PART_NAME="/dev/loop0p2" # get /dev/loop0p2 by fdisk -l $LOOP_NAME
 
 ARTIFACTS_DIR=artifacts
-ARTIFACT_ROOT_FS=pi-rootfs.tar.gz
-ARTIFACT_TOOLCHAIN=pi-toolchain.tar.gz
+ARTIFACT_ROOT_FS=pi-rootfs-${TARGET_ARCH}.tar.gz
+ARTIFACT_TOOLCHAIN=pi-toolchain-${TARGET_ARCH}.tar.gz
 
 PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver"
 

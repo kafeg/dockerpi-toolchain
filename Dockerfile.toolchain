@@ -2,7 +2,7 @@
 # https://solarianprogrammer.com/2018/05/06/building-gcc-cross-compiler-raspberry-pi/
 
 # Ubuntu 18.04 at the time of writing (2019-04-02)
-FROM ubuntu:bionic-20180821 AS build
+FROM ubuntu:bionic-20180821
 
 # This should match the one on your raspi
 ENV GCC_VERSION gcc-8.3.0

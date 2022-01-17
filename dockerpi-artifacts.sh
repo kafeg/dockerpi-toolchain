@@ -31,7 +31,7 @@ then
   
   cp arm-linux-toolchain.cmake $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   
-  sed -i 's/RASPBERRY_VERSION_TPL/$RASPBERRY_VERSION/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  sed -i 's/RASPBERRY_VERSION_TPL/$RASPBERRY_VERSION_NUMBER/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   sed -i 's/SYSROOT_PATH_TPL/$ROOTFS_PATH/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   sed -i 's/TOOLCHAIN_DIR_TPL/$TOOLCHAIN_PATH/g' $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   
@@ -42,6 +42,11 @@ then
 else
   echo "$ARTIFACTS_DIR/$ARTIFACT_TOOLCHAIN already exists"
 fi
+
+cd artifacts
+sha256sum $ARTIFACT_ROOT_FS > checksum-${TARGET_ARCH}.txt
+sha256sum $ARTIFACT_TOOLCHAIN >> checksum-${TARGET_ARCH}.txt
+cd ..
 
 ls -alh artifacts
 

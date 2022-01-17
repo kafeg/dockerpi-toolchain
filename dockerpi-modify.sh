@@ -99,7 +99,7 @@ cd $DMPWD
 umountimg
 
 echo "Finished. Next steps:"
-echo "  docker run -it -v \`pwd\`:/sdcard/ lukechilds/dockerpi:vm"
+echo "  docker run -it -v \`pwd\`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION}"
 echo "  ./dockerpi-extract.sh"
 
 
