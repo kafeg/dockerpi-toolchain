@@ -14,11 +14,11 @@ fi
 [ $? -eq 0 ] || exit 1
 
 mv $IMG_NAME_MOD filesystem.img
-docker kill rootfssetup-${TARGET_ARCH}
-docker rm rootfssetup-${TARGET_ARCH}
-docker run --name rootfssetup-${TARGET_ARCH} -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
-docker stop -t 1800 rootfssetup-${TARGET_ARCH} # https://github.com/lukechilds/dockerpi/pull/4
-docker rm rootfssetup-${TARGET_ARCH}
+rm -f ./rootfssetup-${TARGET_ARCH}-cid
+docker run --cidfile ./rootfssetup-${TARGET_ARCH}-cid -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
+CID=`cat ./rootfssetup-${TARGET_ARCH}-cid`
+docker stop -t 1800 $CID # https://github.com/lukechilds/dockerpi/pull/4
+rm -f ./rootfssetup-${TARGET_ARCH}-cid
 mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
 

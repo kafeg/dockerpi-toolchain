@@ -9,7 +9,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-if [ ! -f "$ZIP_NAME" ]
+if [ ! -f "/opt/$ZIP_NAME" ]
 then
   echo "Downloading filesystem image to /opt/$ZIP_NAME"
   wget --quiet -O /opt/$ZIP_NAME $ZIP_URL
