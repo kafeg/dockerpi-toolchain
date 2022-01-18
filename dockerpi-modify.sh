@@ -89,9 +89,9 @@ then
   sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y cloud-utils
   ls -alh /dev
-  # sudo fdisk -l
-  # sudo growpart 
-  # sudo resize2fs 
+  sudo fdisk -l
+  sudo growpart /dev/sda 2
+  sudo resize2fs /dev/sda2
   #sudo raspi-config nonint do_expand_rootfs # don't work
   sleep 5
   touch /opt/resized
