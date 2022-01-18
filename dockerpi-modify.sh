@@ -92,6 +92,7 @@ then
   sleep 5
   sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y parted
+  ls -alh /dev
   sudo fdisk -l
   sudo /resize.sh /dev/sda 2 apply
   sudo resize2fs /dev/sda2
