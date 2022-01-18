@@ -7,17 +7,17 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-#if [ ! -f "$IMG_NAME_MOD" ]
-#then
-#    echo "$IMG_NAME_MOD not exists"
-#    exit 1
-#fi
-#
-#if [ ! -d "$ROOTFS_PATH" ]
-#then
-#    echo "$ROOTFS_PATH not exists"
-#    exit 1
-#fi
+if [ ! -f "$IMG_NAME_MOD" ]
+then
+    echo "$IMG_NAME_MOD not exists"
+    exit 1
+fi
+
+if [ ! -d "$ROOTFS_PATH" ]
+then
+    echo "$ROOTFS_PATH not exists"
+    exit 1
+fi
 
 if [ -z "$TOOLCHAIN_PATH" ]
 then
