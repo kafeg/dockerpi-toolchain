@@ -10,6 +10,9 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+./dockerpi-toolchain.sh
+[ $? -eq 0 ] || exit 1
+
 ./dockerpi-modify.sh
 [ $? -eq 0 ] || exit 1
 
@@ -28,9 +31,6 @@ mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
 
 ./dockerpi-extract.sh
-[ $? -eq 0 ] || exit 1
-
-./dockerpi-toolchain.sh
 [ $? -eq 0 ] || exit 1
 
 ./dockerpi-artifacts.sh
