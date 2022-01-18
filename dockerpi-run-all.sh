@@ -14,12 +14,21 @@ fi
 [ $? -eq 0 ] || exit 1
 
 mv $IMG_NAME_MOD filesystem.img
+
+# resize and reboot
 rm -f ./rootfssetup-${TARGET_ARCH}-cid
 docker run --cidfile ./rootfssetup-${TARGET_ARCH}-cid -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
 sleep 3
 CID=`cat ./rootfssetup-${TARGET_ARCH}-cid`
 docker stop -t 1800 $CID # https://github.com/lukechilds/dockerpi/pull/4
-#rm -f ./rootfssetup-${TARGET_ARCH}-cid
+
+# install software/modify img
+rm -f ./rootfssetup-${TARGET_ARCH}-cid
+docker run --cidfile ./rootfssetup-${TARGET_ARCH}-cid -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
+sleep 3
+CID=`cat ./rootfssetup-${TARGET_ARCH}-cid`
+docker stop -t 1800 $CID # https://github.com/lukechilds/dockerpi/pull/4
+
 mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
 

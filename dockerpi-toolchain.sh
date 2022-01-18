@@ -33,7 +33,7 @@ fi
 
 if [ "${TARGET_ARCH}" = "armv6" ]; then
     TOOLCHAIN_TARGET="arm-linux-gnueabihf"
-else if [ "${TARGET_ARCH}" = "armv7" ]; then
+elif [ "${TARGET_ARCH}" = "armv7" ]; then
     TOOLCHAIN_TARGET="arm-linux-gnueabihf"
 else
     TOOLCHAIN_TARGET="aarch64-linux-gnueabihf"
@@ -41,7 +41,7 @@ fi
 
 if [ "${TARGET_ARCH}" = "armv6" ]; then
     TOOLCHAIN_ARM="arm"
-else if [ "${TARGET_ARCH}" = "armv7" ]; then
+elif [ "${TARGET_ARCH}" = "armv7" ]; then
     TOOLCHAIN_ARM="arm"
 else
     TOOLCHAIN_ARM="arm64"

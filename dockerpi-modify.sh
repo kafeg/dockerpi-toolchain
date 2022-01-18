@@ -50,7 +50,7 @@ else
   echo "Using exists $IMG_NAME_MOD"
 fi
 
-chmod 777 $IMG_NAME $ZIP_NAME
+chmod 777 $IMG_NAME_MOD
 
 mountimg
 
@@ -64,7 +64,8 @@ Before=rc-local.service
 ConditionFileNotEmpty=/firstboot.sh
 
 [Service]
-Type=oneshot
+#Type=oneshot
+Type=simple
 ExecStart=/firstboot.sh
 RemainAfterExit=no
 StandardOutput=tty
@@ -80,12 +81,25 @@ rm -f $MOUNT_PATH/firstboot.sh
 cat <<EOT >> $MOUNT_PATH/firstboot.sh
 #!/bin/bash
 #set -x
-sleep 15
-sudo apt-get update --allow-releaseinfo-change
-sudo apt-get install -y $PACKAGES_LIST
-sudo apt-get autoremove -y
-sleep 30
-sudo halt
+
+if [ ! -f /opt/resized ]
+then
+  sudo raspi-config nonint do_expand_rootfs
+  sudo halt
+  touch /opt/resized
+  exit 0
+fi
+
+if [ ! -f /opt/modified ]
+then
+  sleep 15
+  sudo apt-get update --allow-releaseinfo-change
+  sudo apt-get install -y $PACKAGES_LIST
+  sudo apt-get autoremove -y
+  sleep 30
+  touch /opt/modified
+  sudo halt
+fi
 EOT
 
 chmod a+x $MOUNT_PATH/firstboot.sh
