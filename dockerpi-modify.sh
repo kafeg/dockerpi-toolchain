@@ -94,8 +94,14 @@ then
   sudo apt-get install -y parted
   ls -alh /dev
   sudo fdisk -l
+  # pi1
   sudo /resize.sh /dev/sda 2 apply
   sudo resize2fs /dev/sda2
+  
+  # pi3
+  sudo /resize.sh /dev/mmcblk0 2 apply
+  sudo resize2fs /dev/mmcblk0 2
+  
   sudo fdisk -l
   #sudo raspi-config nonint do_expand_rootfs # don't work
   sleep 5
