@@ -86,29 +86,29 @@ cat <<EOT >> $MOUNT_PATH/firstboot.sh
 #!/bin/bash
 #set -x
 
-if [ ! -f /opt/resized ]
-then
-  echo "Resizing and reboot"
-  sleep 5
-  sudo apt-get update --allow-releaseinfo-change
-  sudo apt-get install -y parted
-  ls -alh /dev
-  sudo fdisk -l
-  # pi1
-  sudo /resize.sh /dev/sda 2 apply
-  sudo resize2fs /dev/sda2
-  
-  # pi3
-  sudo /resize.sh /dev/mmcblk0 2 apply
-  sudo resize2fs /dev/mmcblk0p2
-  
-  sudo fdisk -l
-  #sudo raspi-config nonint do_expand_rootfs # don't work
-  sleep 5
-  touch /opt/resized
-  sudo halt
-  exit 0
-fi
+#if [ ! -f /opt/resized ]
+#then
+#  echo "Resizing and reboot"
+#  sleep 5
+#  sudo apt-get update --allow-releaseinfo-change
+#  sudo apt-get install -y parted
+#  ls -alh /dev
+#  sudo fdisk -l
+#  # pi1
+#  sudo /resize.sh /dev/sda 2 apply
+#  sudo resize2fs /dev/sda2
+#  
+#  # pi3
+#  sudo /resize.sh /dev/mmcblk0 2 apply
+#  sudo resize2fs /dev/mmcblk0p2
+#  
+#  sudo fdisk -l
+#  #sudo raspi-config nonint do_expand_rootfs # don't work
+#  sleep 5
+#  touch /opt/resized
+#  sudo halt
+#  exit 0
+#fi
 
 if [ ! -f /opt/modified ]
 then
