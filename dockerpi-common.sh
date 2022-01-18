@@ -69,8 +69,8 @@ function umountimg {
 
 function runandwaitcontainer {
   CNAME=rootfssetup-${TARGET_ARCH}
-  docker kill $CNAME 2> /dev/null
-  docker rm $CNAME 2> /dev/null
+  docker kill $CNAME 2>&1 > /dev/null
+  docker rm $CNAME 2>&1 > /dev/null
   docker run --name $CNAME -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
   
   # wait until container stop but not more then N minutes (pi2/pi3 can't quit machines correctly https://github.com/lukechilds/dockerpi/pull/4)
@@ -83,11 +83,12 @@ function runandwaitcontainer {
 	echo "Wait for $MAX_MINUTES of $N minutes"
 	if [ $MAX_MINUTES -gt $N ] 
 	then 
+	  echo "Interrupt by counter"
 	  break 
 	fi
   done;
   
-  docker stop $CNAME
-  docker kill $CNAME 2> /dev/null
-  docker rm $CNAME 2> /dev/null
+  docker stop $CNAME 2>&1 > /dev/null
+  docker kill $CNAME 2>&1 > /dev/null
+  docker rm $CNAME 2>&1 > /dev/null
 }
