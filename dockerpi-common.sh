@@ -17,7 +17,7 @@ then
     TARGET_ARCH="armv7" # pi2
 else
     # aarch64 -> Unknown arch used in --with-arch=aarch64 https://www.linuxquestions.org/questions/linux-from-scratch-13/gcc-first-build-unknown-architecture-aarch64-cross-compiling-for-raspberry-pi-4-a-4175691211/
-    TARGET_ARCH="armv8" # pi3
+    TARGET_ARCH="armv8-a" # pi3
 fi
 
 ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
