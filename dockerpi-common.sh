@@ -68,7 +68,14 @@ function umountimg {
 }
 
 function runandwaitcontainer {
+  MAX=$1
   docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
-  for i in $(seq 1 15); do echo "Sleep $i of 15"; sleep 60; done
-  #docker stop contname
+  sleep 1
+  CID=`docker ps | grep dockerpi:vm | | grep "./entrypoint.sh ${RASPBERRY_VERSION}" awk '{ print $1 }'`
+  for i in $(seq 1 $MAX)
+  do 
+    echo "Wait $i of $MAX for container $CID"
+	sleep 60
+  done
+  docker stop $CID
 }

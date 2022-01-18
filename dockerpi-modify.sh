@@ -84,16 +84,25 @@ cat <<EOT >> $MOUNT_PATH/firstboot.sh
 
 if [ ! -f /opt/resized ]
 then
-  sudo raspi-config nonint do_expand_rootfs
-  sudo halt
+  echo "Resizing and reboot"
+  sleep 5
+  sudo apt-get update --allow-releaseinfo-change
+  sudo apt-get install -y cloud-utils
+  ls -alh /dev
+  # sudo fdisk -l
+  # sudo growpart 
+  # sudo resize2fs 
+  #sudo raspi-config nonint do_expand_rootfs # don't work
+  sleep 5
   touch /opt/resized
+  sudo halt
   exit 0
 fi
 
 if [ ! -f /opt/modified ]
 then
+  echo "Install packages"
   sleep 15
-  sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y $PACKAGES_LIST
   sudo apt-get autoremove -y
   sleep 30

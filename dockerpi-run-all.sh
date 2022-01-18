@@ -19,10 +19,10 @@ mv $IMG_NAME_MOD filesystem.img
 # and we need to manually wait and kill container if it's type is pi2/pi3 (https://github.com/lukechilds/dockerpi/pull/4)
 
 # resize and reboot
-runandwaitcontainer
+runandwaitcontainer 3
 
 # install software/modify img
-runandwaitcontainer
+runandwaitcontainer 5
 
 mv filesystem.img $IMG_NAME_MOD
 [ $? -eq 0 ] || exit 1
