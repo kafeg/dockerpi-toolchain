@@ -99,8 +99,8 @@ then
   sudo resize2fs /dev/sda2
   
   # pi3
-  sudo /resize.sh /dev/mmcblk0 2 apply
-  sudo resize2fs /dev/mmcblk0 2
+  sudo /resize.sh /dev/mmcblk0 p2 apply
+  sudo resize2fs /dev/mmcblk0p2
   
   sudo fdisk -l
   #sudo raspi-config nonint do_expand_rootfs # don't work
