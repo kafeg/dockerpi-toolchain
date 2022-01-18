@@ -31,7 +31,7 @@ then
   rm $ZIP_NAME
 fi
 
-chmod 777 $IMG_NAME $ZIP_NAME
+chmod 777 $IMG_NAME /opt/$ZIP_NAME
 
 if [ -f "$IMG_NAME_MOD" ]
 then
