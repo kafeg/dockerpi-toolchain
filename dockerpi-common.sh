@@ -68,27 +68,7 @@ function umountimg {
 }
 
 function runandwaitcontainer {
-  CNAME=rootfssetup-${TARGET_ARCH}
-  docker kill $CNAME 2>&1 > /dev/null
-  docker rm $CNAME 2>&1 > /dev/null
-  docker run --name $CNAME -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
-  
-  # wait until container stop but not more then N minutes (pi2/pi3 can't quit machines correctly https://github.com/lukechilds/dockerpi/pull/4)
-  N=15
-  MAX_MINUTES=0
-  until [ "`docker inspect -f {{.State.Running}} $CNAME`"=="true" ]; do
-    sleep 60;
-
-	MAX_MINUTES=$((MAX_MINUTES+1))
-	echo "Wait for $MAX_MINUTES of $N minutes"
-	if [ $MAX_MINUTES -gt $N ] 
-	then 
-	  echo "Interrupt by counter"
-	  break 
-	fi
-  done;
-  
-  docker stop $CNAME 2>&1 > /dev/null
-  docker kill $CNAME 2>&1 > /dev/null
-  docker rm $CNAME 2>&1 > /dev/null
+  docker run -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
+  for i in $(seq 1 15); do echo "Sleep $i of 15"; sleep 60; done
+  #docker stop contname
 }
