@@ -67,3 +67,26 @@ function umountimg {
   echo "Unmounted..."
 }
 
+function runandwaitcontainer {
+  
+  rm -f ./rootfssetup-${TARGET_ARCH}-cid 2> /dev/null
+  docker run --cidfile ./rootfssetup-${TARGET_ARCH}-cid -v `pwd`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION} &
+  CID=`cat ./rootfssetup-${TARGET_ARCH}-cid`
+  
+  # wait until container stop but not more then N minutes (pi2/pi3 can't quit machines correctly https://github.com/lukechilds/dockerpi/pull/4)
+  N=15
+  MAX_MINUTES=0
+  until [ "`docker inspect -f {{.State.Running}} $CID`"=="true" ]; do
+    sleep 60;
+	
+	MAX_MINUTES=$((MAX_MINUTES+1))
+	echo "Wait for $MAX_MINUTES of $N minutes"
+	if [ $MAX_MINUTES -gt $N ] 
+	then 
+	  break 
+	fi
+  done;
+  
+  docker stop $CID
+  rm -f ./rootfssetup-${TARGET_ARCH}-cid 2> /dev/null
+}
