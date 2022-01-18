@@ -99,7 +99,7 @@ then
   sudo resize2fs /dev/sda2
   
   # pi3
-  sudo /resize.sh /dev/mmcblk0 p2 apply
+  sudo /resize.sh /dev/mmcblk0 2 apply
   sudo resize2fs /dev/mmcblk0p2
   
   sudo fdisk -l
@@ -114,6 +114,7 @@ if [ ! -f /opt/modified ]
 then
   echo "Install packages"
   sleep 15
+  sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y $PACKAGES_LIST
   sudo apt-get autoremove -y
   sleep 30
