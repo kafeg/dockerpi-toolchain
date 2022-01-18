@@ -76,7 +76,11 @@ SyslogIdentifier=firstboot
 WantedBy=multi-user.target
 EOT
 
-# add script
+# add helper scripts
+cp ./resize.sh $MOUNT_PATH/
+chmod a+x $MOUNT_PATH/resize.sh
+
+# add firstboot script
 rm -f $MOUNT_PATH/firstboot.sh
 cat <<EOT >> $MOUNT_PATH/firstboot.sh
 #!/bin/bash
@@ -87,10 +91,11 @@ then
   echo "Resizing and reboot"
   sleep 5
   sudo apt-get update --allow-releaseinfo-change
-  sudo apt-get install -y cloud-utils
-  ls -alh /dev
-  sudo fdisk -l
-  sudo growpart /dev/sda 2
+  sudo apt-get install -y parted
+  #ls -alh /dev
+  #sudo fdisk -l
+  #sudo growpart /dev/sda 2
+  sudo /resize.sh /dev/sda 2 apply
   sudo resize2fs /dev/sda2
   #sudo raspi-config nonint do_expand_rootfs # don't work
   sleep 5
