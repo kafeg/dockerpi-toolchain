@@ -47,7 +47,7 @@ elif [ "${TARGET_ARCH}" = "armv7" ]; then
 	TOOLCHAIN_FLOAT="--with-fpu=vfp --with-float=hard"
 else
     TOOLCHAIN_ARM="arm64"
-	TOOLCHAIN_FLOAT="" # float, fpu is a standard part of aarch64
+	TOOLCHAIN_FLOAT="" # hard float andvfp is a standard part of aarch64
 fi
 
 echo "Remove exists $TOOLCHAIN_PATH"
@@ -60,7 +60,7 @@ then
     exit 1
 fi
 
-docker build -f Dockerfile.toolchain --build-arg TOOLCHAIN_PATH_ARG=${TOOLCHAIN_PATH} --build-arg TOOLCHAIN_ARCH_ARG=${TARGET_ARCH} --build-arg TOOLCHAIN_TARGET_ARG=${TOOLCHAIN_TARGET} --build-arg TOOLCHAIN_ARM_ARG=${TOOLCHAIN_ARM} --network=host -t dockerpi/toolchain-${TARGET_ARCH} .
+docker build -f Dockerfile.toolchain --build-arg TOOLCHAIN_PATH_ARG=${TOOLCHAIN_PATH} --build-arg TOOLCHAIN_ARCH_ARG=${TARGET_ARCH} --build-arg TOOLCHAIN_TARGET_ARG=${TOOLCHAIN_TARGET} --build-arg TOOLCHAIN_ARM_ARG=${TOOLCHAIN_ARM} --build-arg TOOLCHAIN_FLOAT_ARG=${TOOLCHAIN_FLOAT} --network=host -t dockerpi/toolchain-${TARGET_ARCH} .
 docker run -v /opt:/opt/mount --rm dockerpi/toolchain-${TARGET_ARCH} bash -c "cp -r ${TOOLCHAIN_PATH} /opt/mount/"
 ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_TARGET}-cpp --version
 
