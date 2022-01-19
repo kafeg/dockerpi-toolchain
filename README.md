@@ -95,6 +95,10 @@ jobs:
           aws s3 sync artifacts/ s3://$AWS_BUCKET/$AWS_DIR/ --quiet
 ```
 
+#### Sample artifacts on S3
+
+![Sample artifacts on S3](https://github.com/kafeg/dockerpi-toolchain/raw/main/dockerpi-toolchain-artifacts.png)
+
 ### How to cross-compile vcpkg ports
 
 To use vcpkg with built toolchain and cross-compile something you need to save `chainload` file and change vcpkg triplet `arm-linux`. Chainload file already prepared and placed inside `pi-toolchain.tar.gz`.
