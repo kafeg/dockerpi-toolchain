@@ -12,6 +12,8 @@ umountimg
 rm -rf $TOOLCHAIN_PATH
 rm -rf $ROOTFS_PATH
 rm -rf $MOUNT_PATH
+rm -f /opt/${ARTIFACT_ROOT_FS}
+rm -f /opt/${ARTIFACT_TOOLCHAIN}
 
 rm -f *.zip
 rm -f /opt/*raspbian*.zip
