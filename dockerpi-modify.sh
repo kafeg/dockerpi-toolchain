@@ -93,7 +93,7 @@ then
   sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y parted cloud-utils
   ls -alh /dev
-  sudo fdisk -l
+  #sudo fdisk -l
   # pi1
   sudo /resize.sh /dev/sda 2 apply
   sudo resize2fs /dev/sda2
@@ -103,9 +103,9 @@ then
   sudo growpart /dev/mmcblk0 2
   sudo resize2fs /dev/mmcblk0p2
   
-  sudo fdisk -l
-  sudo raspi-config nonint do_expand_rootfs # don't work on Pi1
-  sudo fdisk -l
+  #sudo fdisk -l
+  #sudo raspi-config nonint do_expand_rootfs # don't work and freeze on Pi1
+  #sudo fdisk -l
   sleep 5
   touch /opt/resized
   sudo halt
