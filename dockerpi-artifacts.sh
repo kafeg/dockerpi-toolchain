@@ -46,6 +46,7 @@ fi
 cd artifacts
 sha256sum $ARTIFACT_ROOT_FS > checksum-${TARGET_ARCH}.txt
 sha256sum $ARTIFACT_TOOLCHAIN >> checksum-${TARGET_ARCH}.txt
+chmod 777 checksum-${TARGET_ARCH}.txt
 cd ..
 
 ls -alh artifacts
