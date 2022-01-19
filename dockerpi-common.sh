@@ -26,7 +26,7 @@ then
   ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip"
   ZIP_SHA256="0639c516aa032df314b176bda97169bdc8564e7bc5afd4356caafbc3f6d090ed"
   ZIP_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
-  IMG_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
+  IMG_NAME="2020-08-20-raspios-buster-arm64-lite.img"
 else
   # for aarch32 / arm rootfs
   ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
