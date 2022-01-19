@@ -23,7 +23,7 @@ then
   exit 1
 fi
 
-chmod 777 $IMG_NAME /opt/$ZIP_NAME
+chmod 777 /opt/$ZIP_NAME
 
 if [ -f "$IMG_NAME_MOD" ]
 then
@@ -50,7 +50,7 @@ else
   echo "Using exists $IMG_NAME_MOD"
 fi
 
-chmod 777 $IMG_NAME_MOD
+chmod 777 $IMG_NAME $IMG_NAME_MOD
 
 mountimg
 
