@@ -20,6 +20,9 @@ ENV TOOLCHAIN_TARGET=$TOOLCHAIN_TARGET_ARG
 ARG TOOLCHAIN_ARM_ARG
 ENV TOOLCHAIN_ARM=$TOOLCHAIN_ARM_ARG
 
+ARG TOOLCHAIN_FLOAT_ARG
+ENV TOOLCHAIN_FLOAT=$TOOLCHAIN_FLOAT_ARG
+
 ARG TOOLCHAIN_PATH_ARG
 ENV TOOLCHAIN_PATH=$TOOLCHAIN_PATH_ARG
 
@@ -70,7 +73,7 @@ RUN mkdir -p ${TOOLCHAIN_PATH}
 WORKDIR /home/develop/build-binutils
 RUN ../${BINUTILS_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH} --target=${TOOLCHAIN_TARGET} \
-        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} ${TOOLCHAIN_FLOAT} \
         --disable-multilib
 RUN make -j$(nproc) && \
     make install
@@ -81,7 +84,7 @@ RUN ../${GCC_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH} \
         --target=${TOOLCHAIN_TARGET} \
         --enable-languages=c,c++,fortran \
-        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} ${TOOLCHAIN_FLOAT} \
         --disable-multilib
 RUN make -j$(nproc) all-gcc && \
     make install-gcc
@@ -106,7 +109,7 @@ WORKDIR /home/develop/build-glibc
 RUN ../${GLIBC_VERSION}/configure \
         --prefix=${TOOLCHAIN_PATH}/${TOOLCHAIN_TARGET} \
         --build=$MACHTYPE --host=${TOOLCHAIN_TARGET} --target=${TOOLCHAIN_TARGET} \
-        --with-arch=${TOOLCHAIN_ARCH} --with-fpu=vfp --with-float=hard \
+        --with-arch=${TOOLCHAIN_ARCH} ${TOOLCHAIN_FLOAT} \
         --with-headers=${TOOLCHAIN_PATH}/${TOOLCHAIN_TARGET}/include \
         --disable-multilib libc_cv_forced_unwind=yes
 RUN make install-bootstrap-headers=yes install-headers
