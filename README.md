@@ -11,10 +11,12 @@ The main goal of this project is to avoid manual command executing and automate 
 ### Usage
 - `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain; chmod a+x ./*.sh`
 - `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
-- `sudo PI_VER=pi1 ./dockerpi-run-all.sh` - build `ARMv6 / aarch32 toolchain` and `Raspbian aarch32 rootfs`
-- `sudo PI_VER=pi1 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv6 (optional)
-- `sudo PI_VER=pi3 ./dockerpi-run-all.sh` - build `ARMv8-a / aarch64 toolchain` and `RaspiOS aarch64 rootfs`
-- `sudo PI_VER=pi3 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv8-a (optional)
+- to make ARMv6/aarch32 env:
+- - `sudo PI_VER=pi1 ./dockerpi-run-all.sh` - build `ARMv6 / aarch32 toolchain` and `Raspbian aarch32 rootfs`
+- - `sudo PI_VER=pi1 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv6 (optional)
+- to make ARMv8-a/aarch64 env:
+- - `sudo PI_VER=pi3 ./dockerpi-run-all.sh` - build `ARMv8-a / aarch64 toolchain` and `RaspiOS aarch64 rootfs`
+- - `sudo PI_VER=pi3 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv8-a (optional)
 
 ### Configuration
 
