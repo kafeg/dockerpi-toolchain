@@ -62,6 +62,6 @@ fi
 
 docker build -f Dockerfile.toolchain --build-arg TOOLCHAIN_PATH_ARG=${TOOLCHAIN_PATH} --build-arg TOOLCHAIN_ARCH_ARG=${TARGET_ARCH} --build-arg TOOLCHAIN_TARGET_ARG=${TOOLCHAIN_TARGET} --build-arg TOOLCHAIN_ARM_ARG=${TOOLCHAIN_ARM} --network=host -t dockerpi/toolchain-${TARGET_ARCH} .
 docker run -v /opt:/opt/mount --rm dockerpi/toolchain-${TARGET_ARCH} bash -c "cp -r ${TOOLCHAIN_PATH} /opt/mount/"
-${TOOLCHAIN_PATH}/bin/arm-linux-gnueabihf-cpp --version
+${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_TARGET}-cpp --version
 
 
