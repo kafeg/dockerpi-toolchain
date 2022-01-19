@@ -105,15 +105,21 @@ To use vcpkg with built toolchain and cross-compile something you need to save `
 
 #### Sample to install package
 1. Download and place artifacts to `/opt` like: `/opt/pi-rootfs-armv6.tar.gz`, `/opt/pi-toolchain-armv6.tar.gz`, `/opt/pi-rootfs-armv8-a.tar.gz`, `/opt/pi-toolchain-armv8-a.tar.gz`.
-2. Extract artifacts: `cd /opt; rm -rf ./pi-*/; for f in pi-*.tar.gz; do tar -xvf "$f" > /dev/null; done`. You should have 4 dirs now: `/opt/pi-rootfs-armv6/`, `/opt/pi-toolchain-armv6/`, `/opt/pi-rootfs-armv8-a/`, `/opt/pi-toolchain-armv8-a/`
-3. git clone https://github.com/microsoft/vcpkg
-4. ./vcpkg/bootstrap-vcpkg.sh
-5. echo 'set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)' >> ./vcpkg/triplets/community/arm-linux.cmake
-6. echo 'set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)' >> ./vcpkg/triplets/community/arm64-linux.cmake
-7. export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv6
-8. ./vcpkg/vcpkg install zlib:arm-linux
-9. export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv8-a
-10. ./vcpkg/vcpkg install zlib:arm64-linux
+2. Extract artifacts: 
+   - `cd /opt; rm -rf ./pi-*/; for f in pi-*.tar.gz; do tar -xvf "$f" > /dev/null; done`.
+   - You should have 4 dirs now: `/opt/pi-rootfs-armv6/`, `/opt/pi-toolchain-armv6/`, `/opt/pi-rootfs-armv8-a/`, `/opt/pi-toolchain-armv8-a/`
+3. `git clone https://github.com/microsoft/vcpkg`
+4. `./vcpkg/bootstrap-vcpkg.sh`
+5. ARMv6 / aarch32
+   - `echo 'set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)' >> ./vcpkg/triplets/community/arm-linux.cmake`
+   - `export PATH=/opt/pi-toolchain-armv6/bin:/opt/pi-toolchain-armv6/libexec/gcc/arm-linux-gnueabihf/8.3.0:$PATH`
+   - `export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv6`
+   - `./vcpkg/vcpkg install zlib:arm-linux`
+6. ARMv8-a / aarch64
+   - `echo 'set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)' >> ./vcpkg/triplets/community/arm64-linux.cmake`
+   - `export PATH=/opt/pi-toolchain-armv8-a/bin:/opt/pi-toolchain-armv8-a/libexec/gcc/arm-linux-gnueabihf/8.3.0:$PATH`
+   - `export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv8-a`
+   - `./vcpkg/vcpkg install zlib:arm64-linux`
 
 ### How to cross-compile your software
 
