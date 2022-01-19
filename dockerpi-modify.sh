@@ -19,7 +19,7 @@ echo $ZIP_SHA256 /opt/$ZIP_NAME | sha256sum -c
 
 if [ $? -ne 0 ]
 then
-  echo "$ZIP_NAME has invalid hash. Please remove it and download again"
+  echo "$ZIP_NAME has invalid hash. Please remove zip and img and download again"
   exit 1
 fi
 
@@ -137,8 +137,15 @@ cd $DMPWD
 
 umountimg
 
-echo "Finished. Next steps:"
-echo "  docker run -it -v \`pwd\`:/sdcard/ lukechilds/dockerpi:vm ${RASPBERRY_VERSION}"
-echo "  ./dockerpi-extract.sh"
+mv $IMG_NAME_MOD filesystem.img
 
+# we should run container twice to resize root filesystem and to install software/modify
+# and we need to manually wait and kill container if it's type is pi2/pi3 (https://github.com/lukechilds/dockerpi/pull/4)
 
+# resize and reboot
+runandwaitcontainer 10
+
+# install software/modify img
+runandwaitcontainer 20
+
+mv filesystem.img $IMG_NAME_MOD

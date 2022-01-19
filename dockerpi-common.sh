@@ -20,10 +20,21 @@ else
     TARGET_ARCH="armv8-a" # pi3
 fi
 
-ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
-ZIP_SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
-ZIP_NAME="2020-02-13-raspbian-buster-lite.zip"
-IMG_NAME="2020-02-13-raspbian-buster-lite.img"
+if [ "${RASPBERRY_VERSION}" = "pi3" ]
+then
+  # for aarch64 / arm64 rootfs
+  ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip"
+  ZIP_SHA256="0639c516aa032df314b176bda97169bdc8564e7bc5afd4356caafbc3f6d090ed"
+  ZIP_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
+  IMG_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
+else
+  # for aarch32 / arm rootfs
+  ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
+  ZIP_SHA256="12ae6e17bf95b6ba83beca61e7394e7411b45eba7e6a520f434b0748ea7370e8"
+  ZIP_NAME="2020-02-13-raspbian-buster-lite.zip"
+  IMG_NAME="2020-02-13-raspbian-buster-lite.img"
+fi
+
 IMG_NAME_MOD="filesystem-${TARGET_ARCH}.img"
 
 TOOLCHAIN_PATH=/opt/pi-toolchain-${TARGET_ARCH}
