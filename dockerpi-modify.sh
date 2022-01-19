@@ -23,14 +23,6 @@ then
   exit 1
 fi
 
-if [ ! -f "$IMG_NAME" ]
-then
-  echo "Unzipping filesystem image"
-  cp /opt/$ZIP_NAME ./
-  unzip $ZIP_NAME
-  rm $ZIP_NAME
-fi
-
 chmod 777 $IMG_NAME /opt/$ZIP_NAME
 
 if [ -f "$IMG_NAME_MOD" ]
@@ -41,10 +33,18 @@ fi
 
 echo "Modifying filesystem image $IMG_NAME"
 
+if [ ! -f "$IMG_NAME" ]
+then
+  echo "Unzipping filesystem image"
+  cp /opt/$ZIP_NAME ./
+  unzip $ZIP_NAME
+  rm $ZIP_NAME
+fi
+
 if [ ! -f "$IMG_NAME_MOD" ]
 then
   # Reuse exists filesystem.img as cached with force until user will remove it
-  cp $IMG_NAME $IMG_NAME_MOD
+  mv $IMG_NAME $IMG_NAME_MOD
   echo "Copy $IMG_NAME to $IMG_NAME_MOD"
 else
   echo "Using exists $IMG_NAME_MOD"

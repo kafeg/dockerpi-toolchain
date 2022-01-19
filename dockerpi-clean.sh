@@ -15,6 +15,7 @@ rm -rf $MOUNT_PATH
 
 rm -f *.zip
 rm -f /opt/*raspbian*.zip
+rm -f /opt/*raspios*.zip
 rm -f *.img
 
 docker rmi dockerpi/toolchain -f

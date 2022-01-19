@@ -52,3 +52,8 @@ cd ..
 
 ls -alh artifacts
 
+# basic cleanup data which can be easy and fast restored
+rm -rf $TOOLCHAIN_PATH
+rm -rf $ROOTFS_PATH
+rm -rf $MOUNT_PATH
+
