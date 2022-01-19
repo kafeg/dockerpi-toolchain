@@ -39,25 +39,23 @@ In the end you will get two `.tar.gz` files which can be used to cross-compile y
 ### Usage
 - `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain; chmod a+x ./*.sh`
 - `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
-- `sudo ./dockerpi-run-all.sh` - build everything
-- `sudo ./dockerpi-clean.sh` - clean up everything (optional)
+- `sudo PI_VER=pi1 ./dockerpi-run-all.sh` - build `ARMv6 / aarch32 toolchain` and `Raspbian aarch32 rootfs`
+- `sudo PI_VER=pi1 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv6 (optional)
+- `sudo PI_VER=pi3 ./dockerpi-run-all.sh` - build `ARMv8-a / aarch64 toolchain` and `RaspiOS aarch64 rootfs`
+- `sudo PI_VER=pi3 ./dockerpi-clean.sh` - clean up all cached stuff related to ARMv8-a (optional)
 
 ### Configuration
 
-Please check `dockerpi-common.sh` to adjust default configuration before call `sudo ./dockerpi-run-all.sh`.
+Please check `dockerpi-common.sh` to adjust default configuration before call `sudo PI_VER=pi* ./dockerpi-run-all.sh`.
 
-Here a list of values which you can change:
-- RASPBERRY_VERSION - accepts values `1`, `2`, `3` and affects to `dockerpi`. Only `1` option tested. Affects to result binaries `arm` or `armv7`.
-- PACKAGES_LIST - list of packages to be instalkkled in the custom `rootfs`. By default there a package dependencies to build vcpkg `qt5-base` port.
-- TOOLCHAIN_PATH, ROOTFS_PATH, MOUNT_PATH - output and work pathes. Better to keep unchanged.
-- ZIP_URL, ZIP_SHA256 - source filesystem image to change and customize.
+At lease you can change `PACKAGES_LIST`
 
 ### How to use in CI
 
 This is a sample workflow for GitHub Actions, which build toolchain and then upload artifacts to S3. You can adapt it to your CI system.
 
 ```
-name: build-arm-linux-toolchain-rootfs
+name: build-arm-linux-toolchain
 
 # manual run only
 on: workflow_dispatch
@@ -67,9 +65,14 @@ on: workflow_dispatch
 #  then you can remove it again and just use complete artifacts
 #  This workflow requires `aws-cli` and `docker`, please install it by your system package manager
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_BUCKET: sample_bucket
+  AWS_DIR: arm-linux-toolchain
+
 jobs:
-  job:
-    name: arm-linux-toolchain-rootfs
+  armv6-linux-toolchain:
     runs-on: ubuntu-latest
 
     steps:
@@ -79,24 +82,43 @@ jobs:
           repository: kafeg/dockerpi-toolchain
           path: dockerpi-toolchain
 
-      - name: Build rootfs and toolchain
+      - name: RasPi 1 -> Build rootfs and toolchain armv6 (aarch32)
+        env:
+          PI_VER: pi1
         run: |
           cd dockerpi-toolchain
           chmod a+x ./*.sh
           sudo ./dockerpi-run-all.sh
-          sudo ./dockerpi-clean.sh # optional!
+          #sudo ./dockerpi-clean.sh # (optional)
 
-      - name: Upload to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_BUCKET: sample_bucket
-          AWS_DIR: arm-linux-toolchain
+      - name: RasPi 1 -> Upload to S3 armv6 (aarch32)
         run: |
           cd dockerpi-toolchain
-          aws s3 cp artifacts/pi-rootfs-*.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-rootfs.tar.gz
-          aws s3 cp artifacts/pi-toolchain-*.tar.gz s3://$AWS_BUCKET/$AWS_DIR/pi-toolchain.tar.gz
-          aws s3 cp artifacts/checksum-*.txt s3://$AWS_BUCKET/$AWS_DIR/checksum.txt
+          aws s3 sync artifacts/ s3://$AWS_BUCKET/$AWS_DIR/ --quiet
+
+  armv8-linux-toolchain:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout kafeg/dockerpi-toolchain
+        uses: actions/checkout@v2
+        with:
+          repository: kafeg/dockerpi-toolchain
+          path: dockerpi-toolchain
+
+      - name: RasPi 3 -> Build rootfs and toolchain armv8 (aarch64)
+        env:
+          PI_VER: pi3
+        run: |
+          cd dockerpi-toolchain
+          chmod a+x ./*.sh
+          sudo ./dockerpi-run-all.sh
+          #sudo ./dockerpi-clean.sh
+
+      - name: RasPi 3 -> Upload to S3 armv8 (aarch64)
+        run: |
+          cd dockerpi-toolchain
+          aws s3 sync artifacts/ s3://$AWS_BUCKET/$AWS_DIR/ --quiet
 ```
 
 ### How to cross-compile vcpkg ports
