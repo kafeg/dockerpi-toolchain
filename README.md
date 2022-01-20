@@ -117,7 +117,7 @@ To use vcpkg with built toolchain and cross-compile something you need to save `
    - `./vcpkg/vcpkg install zlib:arm-linux`
 6. ARMv8-a / aarch64
    - `echo 'set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE $ENV{ARM_LINUX_CHAINLOAD_PATH}/arm-linux-toolchain.cmake)' >> ./vcpkg/triplets/community/arm64-linux.cmake`
-   - `export PATH=/opt/pi-toolchain-armv8-a/bin:/opt/pi-toolchain-armv8-a/libexec/gcc/arm-linux-gnueabihf/8.3.0:$PATH`
+   - `export PATH=/opt/pi-toolchain-armv8-a/bin:/opt/pi-toolchain-armv8-a/libexec/gcc/aarch64-linux-gnu/8.3.0:$PATH`
    - `export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv8-a`
    - `./vcpkg/vcpkg install zlib:arm64-linux`
 

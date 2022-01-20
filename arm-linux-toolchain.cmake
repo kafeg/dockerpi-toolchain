@@ -8,14 +8,14 @@
 
 # General params
 set (RASPBERRY_VERSION RASPBERRY_VERSION_TPL)
-set (SYSROOT_PATH SYSROOT_PATH_TPL)
-set (TOOLCHAIN_DIR TOOLCHAIN_DIR_TPL)
+set (SYSROOT_PATH   SYSROOT_PATH_TPL)
+set (TOOLCHAIN_DIR  TOOLCHAIN_DIR_TPL)
+set (TOOLCHAIN_HOST TOOLCHAIN_HOST_TPL)
 
 message(STATUS "Using RasPi version:  ${RASPBERRY_VERSION}")
 message(STATUS "Using sysroot path:   ${SYSROOT_PATH}")
 message(STATUS "Using toolchain path: ${TOOLCHAIN_DIR}")
 
-set(TOOLCHAIN_HOST "arm-linux-gnueabihf")
 set(TOOLCHAIN_CC "${TOOLCHAIN_HOST}-gcc")
 set(TOOLCHAIN_CXX "${TOOLCHAIN_HOST}-g++")
 set(TOOLCHAIN_LD "${TOOLCHAIN_HOST}-ld")
@@ -35,7 +35,7 @@ if(RASPBERRY_VERSION VERSION_GREATER 2)
 elseif(RASPBERRY_VERSION VERSION_GREATER 1)
     set(CMAKE_SYSTEM_PROCESSOR "armv7")
 else()
-    set(CMAKE_SYSTEM_PROCESSOR "arm")
+    set(CMAKE_SYSTEM_PROCESSOR "armv6")
 endif()
 
 # Define the compiler
@@ -44,7 +44,7 @@ set(CMAKE_CXX_COMPILER ${TOOLCHAIN_CXX})
 
 # List of library dirs where LD has to look. Pass them directly through gcc. LD_LIBRARY_PATH is not evaluated by arm-*-ld
 set(LIB_DIRS 
-    "${TOOLCHAIN_DIR}/arm-linux-gnueabihf/lib"
+    "${TOOLCHAIN_DIR}/${TOOLCHAIN_HOST}/lib"
     "${TOOLCHAIN_DIR}/lib"
     "${SYSROOT_PATH}/opt/vc/lib"
     "${SYSROOT_PATH}/lib/${TOOLCHAIN_HOST}"
@@ -54,8 +54,9 @@ set(LIB_DIRS
     "${SYSROOT_PATH}/usr/lib/${TOOLCHAIN_HOST}/blas"
     "${SYSROOT_PATH}/usr/lib/${TOOLCHAIN_HOST}/lapack"
 )
+
 # You can additionally check the linker paths if you add the flags ' -Xlinker --verbose'
-set(COMMON_FLAGS "-I${SYSROOT_PATH}/usr/include -I${SYSROOT_PATH}/usr/include/arm-linux-gnueabihf ")
+set(COMMON_FLAGS "-I${SYSROOT_PATH}/usr/include -I${SYSROOT_PATH}/usr/include/${TOOLCHAIN_HOST} ")
 foreach(LIB ${LIB_DIRS})
     set(COMMON_FLAGS "${COMMON_FLAGS} -L${LIB} -Wl,-rpath-link,${LIB}")
 endforeach()
@@ -88,5 +89,5 @@ set (CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
 # resetting pkg-config paths
 set(ENV{PKG_CONFIG_DIR} "")
-set(ENV{PKG_CONFIG_LIBDIR} "${CMAKE_SYSROOT}/usr/lib/pkgconfig:${CMAKE_SYSROOT}/usr/local/lib/pkgconfig:${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/pkgconfig:${CMAKE_SYSROOT}/usr/share/pkgconfig")
+set(ENV{PKG_CONFIG_LIBDIR} "${CMAKE_SYSROOT}/usr/lib/pkgconfig:${CMAKE_SYSROOT}/usr/local/lib/pkgconfig:${CMAKE_SYSROOT}/usr/lib/${TOOLCHAIN_HOST}/pkgconfig:${CMAKE_SYSROOT}/usr/share/pkgconfig")
 set(ENV{PKG_CONFIG_SYSROOT_DIR} ${CMAKE_SYSROOT})

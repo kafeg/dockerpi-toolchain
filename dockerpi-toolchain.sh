@@ -31,25 +31,6 @@ then
     exit 1
 fi
 
-if [ "${TARGET_ARCH}" = "armv6" ]; then
-    TOOLCHAIN_TARGET="arm-linux-gnueabihf"
-elif [ "${TARGET_ARCH}" = "armv7" ]; then
-    TOOLCHAIN_TARGET="arm-linux-gnueabihf"
-else
-    TOOLCHAIN_TARGET="aarch64-linux-gnueabihf"
-fi
-
-if [ "${TARGET_ARCH}" = "armv6" ]; then
-    TOOLCHAIN_ARM="arm"
-	TOOLCHAIN_FLOAT="--with-fpu=vfp --with-float=hard"
-elif [ "${TARGET_ARCH}" = "armv7" ]; then
-    TOOLCHAIN_ARM="arm"
-	TOOLCHAIN_FLOAT="--with-fpu=vfp --with-float=hard"
-else
-    TOOLCHAIN_ARM="arm64"
-	TOOLCHAIN_FLOAT="" # hard float andvfp is a standard part of aarch64
-fi
-
 echo "Remove exists $TOOLCHAIN_PATH"
 
 rm -rf $TOOLCHAIN_PATH

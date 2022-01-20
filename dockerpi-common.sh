@@ -7,6 +7,13 @@ else
     RASPBERRY_VERSION=$PI_VER
 fi
 
+if [ -z "$PACKAGES" ]
+then
+    PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver"
+else
+    PACKAGES_LIST=$PACKAGES
+fi
+
 RASPBERRY_VERSION_NUMBER=`echo $RASPBERRY_VERSION | sed 's/pi//g'`
 
 if [ "${RASPBERRY_VERSION}" = "pi1" ]
@@ -47,7 +54,24 @@ ARTIFACTS_DIR=artifacts
 ARTIFACT_ROOT_FS=pi-rootfs-${TARGET_ARCH}.tar.gz
 ARTIFACT_TOOLCHAIN=pi-toolchain-${TARGET_ARCH}.tar.gz
 
-PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver"
+if [ "${TARGET_ARCH}" = "armv6" ]; then
+    TOOLCHAIN_TARGET="arm-linux-gnueabihf"
+elif [ "${TARGET_ARCH}" = "armv7" ]; then
+    TOOLCHAIN_TARGET="arm-linux-gnueabihf"
+else
+    TOOLCHAIN_TARGET="aarch64-linux-gnu"
+fi
+
+if [ "${TARGET_ARCH}" = "armv6" ]; then
+    TOOLCHAIN_ARM="arm"
+	TOOLCHAIN_FLOAT="--with-fpu=vfp --with-float=hard"
+elif [ "${TARGET_ARCH}" = "armv7" ]; then
+    TOOLCHAIN_ARM="arm"
+	TOOLCHAIN_FLOAT="--with-fpu=vfp --with-float=hard"
+else
+    TOOLCHAIN_ARM="arm64"
+	TOOLCHAIN_FLOAT="" # hard float andvfp is a standard part of aarch64
+fi
 
 function mountimg {
   if [ -d "$MOUNT_PATH/bin" ]; then umount $MOUNT_PATH; fi

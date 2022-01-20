@@ -34,6 +34,7 @@ then
   sed -i "s/RASPBERRY_VERSION_TPL/$RASPBERRY_VERSION_NUMBER/g" $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   sed -i "s|SYSROOT_PATH_TPL|$ROOTFS_PATH|g" $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   sed -i "s|TOOLCHAIN_DIR_TPL|$TOOLCHAIN_PATH|g" $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
+  sed -i "s|TOOLCHAIN_HOST_TPL|$TOOLCHAIN_TARGET|g" $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   chmod 777 $TOOLCHAIN_PATH/arm-linux-toolchain.cmake
   
   cd $TOOLCHAIN_PATH/..
