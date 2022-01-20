@@ -9,9 +9,17 @@ fi
 
 if [ -z "$PACKAGES" ]
 then
-    PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver"
+    # List from https://github.com/abhiTronix/raspberry-pi-cross-compilers/blob/master/QT_build_instructions.md#11-download-softwares--prepare-the-sd-card
+    PACKAGES_LIST="build-essential ninja-build apt-utils software-properties-common bison flex make curl unzip tar sed wget git yasm sed python libgl1-mesa-dev libglu1-mesa-dev libglu1-mesa-dev libxkbcommon-x11-dev libx11-dev libx11-xcb-dev mc nano libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 libgles-dev libgles1 libgles2 libgles2-mesa-dev libegl-dev libegl-mesa0 libegl1 libegl1-mesa-dev gdb gdbserver gfortran pkg-config libxcb-randr0-dev libxcb-xtest0-dev libxcb-shape0-dev libxcb-xkb-dev"
 else
     PACKAGES_LIST=$PACKAGES
+fi
+
+if [ -z "$BDEPS" ]
+then
+	BUILD_DEP="qt5-qmake libqt5gui5 libqt5webengine-data libqt5webkit5 libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 gdbserver"
+else
+    BUILD_DEP=$BDEPS
 fi
 
 RASPBERRY_VERSION_NUMBER=`echo $RASPBERRY_VERSION | sed 's/pi//g'`

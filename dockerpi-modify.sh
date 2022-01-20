@@ -116,8 +116,11 @@ if [ ! -f /opt/modified ]
 then
   echo "Install packages"
   sleep 15
+  sudo sed -i "s/#deb-src/deb-src/g" /etc/apt/sources.list
+  cat /etc/apt/sources.list
   sudo apt-get update --allow-releaseinfo-change
   sudo apt-get install -y $PACKAGES_LIST
+  sudo apt-get build-dep -y $BUILD_DEP
   sudo apt-get autoremove -y
   sleep 30
   touch /opt/modified

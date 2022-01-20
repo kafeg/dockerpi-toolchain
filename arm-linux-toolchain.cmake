@@ -64,7 +64,7 @@ endforeach()
 set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${SYSROOT_PATH}/usr/lib/${TOOLCHAIN_HOST}")
 
 if(RASPBERRY_VERSION VERSION_GREATER 2)
-    set(CMAKE_C_FLAGS "-mcpu=cortex-a53 -mfpu=neon-vfpv4 -mfloat-abi=hard ${COMMON_FLAGS}" CACHE STRING "Flags for Raspberry PI 3")
+    set(CMAKE_C_FLAGS "-mcpu=cortex-a53 ${COMMON_FLAGS}" CACHE STRING "Flags for Raspberry PI 3")
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "Flags for Raspberry PI 3")
 elseif(RASPBERRY_VERSION VERSION_GREATER 1)
     set(CMAKE_C_FLAGS "-mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard ${COMMON_FLAGS}" CACHE STRING "Flags for Raspberry PI 2")
