@@ -114,15 +114,21 @@ function umountimg {
 function runandwaitcontainer {
   chmod a+x ./vm-entrypoint.sh
   docker build -f Dockerfile.vm -t dockerpi/rootfsvm .
-
-  MAX=$1
-  docker run -v `pwd`:/sdcard/ dockerpi/rootfsvm ${RASPBERRY_VERSION} &
-  sleep 1
-  CID=`docker ps | grep dockerpi:vm | awk '{ print $1 }'`
-  for i in $(seq 1 $MAX)
-  do 
-    echo "Wait $i of $MAX for container $CID"
-	sleep 60
-  done
-  docker stop $CID
+  
+  if [ "${RASPBERRY_VERSION}" = "pi1" ]
+  then
+    docker run -v `pwd`:/sdcard/ dockerpi/rootfsvm ${RASPBERRY_VERSION}
+  else
+    # we need to manually wait and kill container if it's type is pi2/pi3 (https://github.com/lukechilds/dockerpi/pull/4)
+    MAX=$1
+    docker run -v `pwd`:/sdcard/ dockerpi/rootfsvm ${RASPBERRY_VERSION} &
+    sleep 1
+    CID=`docker ps | grep dockerpi:vm | awk '{ print $1 }'`
+    for i in $(seq 1 $MAX)
+    do 
+      echo "Wait $i of $MAX for container $CID"
+	  sleep 60
+    done
+    docker stop $CID
+  fi
 }

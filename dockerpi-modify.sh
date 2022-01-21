@@ -145,6 +145,7 @@ mv $IMG_NAME_MOD filesystem.img
 # we should run container twice to resize root filesystem and to install software/modify
 # and we need to manually wait and kill container if it's type is pi2/pi3 (https://github.com/lukechilds/dockerpi/pull/4)
 
+# aarch64 emulation slower so we need more time to finish job
 if [ "${RASPBERRY_VERSION}" = "pi3" ]
 then
   WAIT_REBOOT=20
