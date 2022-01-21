@@ -145,10 +145,19 @@ mv $IMG_NAME_MOD filesystem.img
 # we should run container twice to resize root filesystem and to install software/modify
 # and we need to manually wait and kill container if it's type is pi2/pi3 (https://github.com/lukechilds/dockerpi/pull/4)
 
+if [ "${RASPBERRY_VERSION}" = "pi3" ]
+then
+  WAIT_REBOOT=20
+  WAIT_INSTALL=180
+else
+  WAIT_REBOOT=15
+  WAIT_INSTALL=45
+fi
+
 # resize and reboot
-runandwaitcontainer 15
+runandwaitcontainer ${WAIT_REBOOT}
 
 # install software/modify img
-runandwaitcontainer 60
+runandwaitcontainer ${WAIT_INSTALL}
 
 mv filesystem.img $IMG_NAME_MOD
