@@ -45,12 +45,12 @@ if [ ! -f "$IMG_NAME_MOD" ]
 then
   # Reuse exists filesystem.img as cached with force until user will remove it
   mv $IMG_NAME $IMG_NAME_MOD
-  echo "Copy $IMG_NAME to $IMG_NAME_MOD"
+  echo "Move $IMG_NAME to $IMG_NAME_MOD"
 else
   echo "Using exists $IMG_NAME_MOD"
 fi
 
-chmod 777 $IMG_NAME $IMG_NAME_MOD
+chmod 777 $IMG_NAME_MOD
 
 mountimg
 

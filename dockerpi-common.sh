@@ -113,10 +113,10 @@ function umountimg {
 
 function runandwaitcontainer {
   chmod a+x ./vm-entrypoint.sh
-  docker build -f Dockerfile.vm -t toolchain/dockerpivm .
+  docker build -f Dockerfile.vm -t dockerpi/rootfsvm .
 
   MAX=$1
-  docker run -v `pwd`:/sdcard/ toolchain/dockerpivm ${RASPBERRY_VERSION} &
+  docker run -v `pwd`:/sdcard/ dockerpi/rootfsvm ${RASPBERRY_VERSION} &
   sleep 1
   CID=`docker ps | grep dockerpi:vm | awk '{ print $1 }'`
   for i in $(seq 1 $MAX)

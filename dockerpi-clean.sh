@@ -20,7 +20,12 @@ rm -f /opt/*raspbian*.zip
 rm -f /opt/*raspios*.zip
 rm -f *.img
 
+docker rmi toolchain/dockerpivm
 docker rmi dockerpi/toolchain -f
+docker rmi dockerpi/rootfsvm -f
+docker rmi dockerpi/toolchain-arm -f
+docker rmi dockerpi/toolchain-armv8-a -f
+docker rmi dockerpi/toolchain-armv6 -f
 docker rmi lukechilds/dockerpi:vm -f
 docker system prune -f
 
