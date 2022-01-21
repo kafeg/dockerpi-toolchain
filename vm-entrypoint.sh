@@ -2,6 +2,8 @@
 
 set -x
 
+env
+
 sed -i 's/\${new_size_in_gib}/4/g' /entrypoint.sh
 
-/entrypoint.sh
+/entrypoint.sh ${RASPBERRY_VERSION}
