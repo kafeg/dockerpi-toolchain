@@ -1,0 +1,4 @@
+FROM lukechilds/dockerpi:vm
+
+ADD ./vm-entrypoint.sh /vm-entrypoint.sh
+ENTRYPOINT ["./vm-entrypoint.sh"]
