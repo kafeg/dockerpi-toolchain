@@ -24,7 +24,7 @@ Please check `dockerpi-common.sh` to adjust default configuration before call `s
 
 At lease you can change `PACKAGES_LIST`
 
-### How to use in CI
+### How to build in CI
 
 This is a sample workflow for GitHub Actions, which build toolchain and then upload artifacts to S3. You can adapt it to your CI system.
 
