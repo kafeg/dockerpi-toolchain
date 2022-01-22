@@ -121,9 +121,11 @@ To use vcpkg with built toolchain and cross-compile something you need to save `
    - `export ARM_LINUX_CHAINLOAD_PATH=/opt/pi-toolchain-armv8-a`
    - `./vcpkg/vcpkg install zlib:arm64-linux`
 
+NOTE: Most of the port should be built fine, but if you need to build for e.g. `qt5-base` it requires additional patches, please check my commits in this branch https://github.com/ptyio/vcpkg/commits/ptyio
+
 ### How to cross-compile your software
 
-TODO ...
+You can just use vcpkg manifest mode `https://vcpkg.readthedocs.io/en/latest/users/manifests/`.
 
 ### Advanced: How does it work internally
 So, `dockerpi-run-all.sh` is the main script in this repo which calls all other.
