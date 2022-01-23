@@ -148,8 +148,8 @@ mv $IMG_NAME_MOD filesystem.img
 # aarch64 emulation slower so we need more time to finish job
 if [ "${RASPBERRY_VERSION}" = "pi3" ]
 then
-  WAIT_REBOOT=20
-  WAIT_INSTALL=60
+  WAIT_REBOOT=30
+  WAIT_INSTALL=180
 else
   WAIT_REBOOT=15
   WAIT_INSTALL=30
