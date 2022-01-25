@@ -40,14 +40,29 @@ fi
 if [ "${RASPBERRY_VERSION}" = "pi3" ]
 then
   # for aarch64 / arm64 rootfs
-  ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip"
-  ZIP_SHA256="0639c516aa032df314b176bda97169bdc8564e7bc5afd4356caafbc3f6d090ed"
-  ZIP_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
-  IMG_NAME="2020-08-20-raspios-buster-arm64-lite.img"
+  
+  # no exists packages after apt-get update: 
+  # E: Release file for http://archive.raspberrypi.org/debian/dists/buster/InRelease is not valid yet (invalid for another 521d 22h 48min 26s). Updates for this repository will not be applied.
+  # E: Release file for http://deb.debian.org/debian/dists/buster/InRelease is not valid yet (invalid for another 414d 22h 46min 31s). Updates for this repository will not be applied.
+  # E: Release file for http://deb.debian.org/debian-security/dists/buster/updates/InRelease is not valid yet (invalid for another 522d 3h 6min 24s). Updates for this repository will not be applied.
+  # N: Repository 'http://deb.debian.org/debian buster-updates InRelease' changed its 'Suite' value from 'stable-updates' to 'oldstable-updates'
+  # E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)
+  # E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?
+  #ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip"
+  #ZIP_SHA256="0639c516aa032df314b176bda97169bdc8564e7bc5afd4356caafbc3f6d090ed"
+  #ZIP_NAME="2020-08-20-raspios-buster-arm64-lite.zip"
+  #IMG_NAME="2020-08-20-raspios-buster-arm64-lite.img"
+  
+  
   #ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/2021-05-07-raspios-buster-arm64-lite.zip"
   #ZIP_SHA256="868cca691a75e4280c878eb6944d95e9789fa5f4bbce2c84060d4c39d057a042"
   #ZIP_NAME="2021-05-07-raspios-buster-arm64-lite.zip"
   #IMG_NAME="2021-05-07-raspios-buster-arm64-lite.img"
+  
+  ZIP_URL="http://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2021-04-09/2021-03-04-raspios-buster-arm64-lite.zip"
+  ZIP_SHA256="2fd2e4e9b01cb754724e1656446d38652395185fc478eeb9cbda2599820744a6"
+  ZIP_NAME="2021-03-04-raspios-buster-arm64-lite.zip"
+  IMG_NAME="2021-03-04-raspios-buster-arm64-lite.img"
 else
   # for aarch32 / arm rootfs
   ZIP_URL="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip"
