@@ -8,6 +8,8 @@ Please check those links above to get info what each project does and about exis
 
 The main goal of this project is to avoid manual command executing and automate everything what can be automated.
 
+NOTE: armv8-a for now unusable, because raspi-os image can't download and install important system packages. Will try to fix later.
+
 ### Usage
 - `cd ~; git clone https://github.com/kafeg/dockerpi-toolchain.git; cd dockerpi-toolchain; chmod a+x ./*.sh`
 - `nano dockerpi-common.sh` - optional, adjust configuration before build, for e.g. packages list or output pathes
